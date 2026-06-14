@@ -42,6 +42,10 @@ SCHEDULE_ROW_LINE = re.compile(r"^U\d+\s", re.I)
 REG_COURSE_BLOCK = re.compile(
     r"(?m)(?=^(?:CICS|COMPSCI|INFO|MATH)\s+[A-Z]?\d{3}[A-Z]{0,2}\b)", re.I
 )
+# Reg-info PDFs are scraped as one blank-line-delimited record per course
+# (see scrape.py extract_reg_info_pdf). Split on record boundaries, not on
+# course-code regex — prerequisites/notes mention other codes mid-line.
+REG_INFO_RECORD_SPLIT = re.compile(r"\n\s*\n")
 HAS_LETTERS = re.compile(r"[A-Za-z]")
 
 # Course blocks shorter than this carry no standalone meaning (header-only
@@ -435,25 +439,35 @@ def chunk_degree_requirements(path: Path) -> list[dict]:
 
 
 def chunk_reg_info(path: Path) -> list[dict]:
+    """One chunk per course registration record — never split mid-course.
+
+    scrape.py writes each course as a single record (header + Instructor/
+    Prerequisites/Eligibility/Notes fields) separated by blank lines. Some
+    records exceed MAX_CHUNK_SIZE but must stay intact so eligibility and
+    prerequisite text are not severed across chunk boundaries.
+    """
     text = strip_boilerplate(path.read_text(encoding="utf-8")).strip()
     semester = semester_from_filename(path.name)
-    blocks = [
-        b.strip()
-        for b in REG_COURSE_BLOCK.split(text)
-        if len(b.strip()) >= MIN_COURSE_BLOCK_CHARS and COURSE_HEADER_LINE.match(b)
-    ]
 
     chunks: list[dict] = []
     index = 0
-    for block in blocks:
-        course_match = COURSE_CODE_EXTRACT.match(block)
+    for record in REG_INFO_RECORD_SPLIT.split(text):
+        record = record.strip()
+        if not record or not HAS_LETTERS.search(record):
+            continue
+        header_line = record.split("\n", 1)[0].strip()
+        if not COURSE_HEADER_LINE.match(header_line):
+            continue
+        if len(record) < MIN_COURSE_BLOCK_CHARS:
+            continue
+
+        course_match = COURSE_CODE_EXTRACT.match(record)
         course_code = course_match.group(1).upper() if course_match else None
-        for piece in maybe_split(block):
-            extra = {"semester": semester}
-            if course_code:
-                extra["course_code"] = course_code
-            chunks.append(make_chunk(piece, path.name, "reg_info", index, **extra))
-            index += 1
+        extra = {"semester": semester}
+        if course_code:
+            extra["course_code"] = course_code
+        chunks.append(make_chunk(record, path.name, "reg_info", index, **extra))
+        index += 1
     return chunks
 
 

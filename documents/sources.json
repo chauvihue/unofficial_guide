@@ -1,0 +1,127 @@
+{
+  "reddit_easy_200_cs_courses.txt": {
+    "type": "reddit",
+    "title": "Easy 200+ CS Courses",
+    "url": "https://www.reddit.com/r/umass/comments/1ot0yto/easy_200_cs_courses/"
+  },
+  "reddit_course_recommendations_ms_cs.txt": {
+    "type": "reddit",
+    "title": "Course recommendations MS CS",
+    "url": "https://www.reddit.com/r/umass/comments/1da5coi/course_recommendations_ms_cs/"
+  },
+  "reddit_thoughts_grad_level_cs_classes.txt": {
+    "type": "reddit",
+    "title": "Thoughts on certain grad level CS classes",
+    "url": "https://www.reddit.com/r/umass/comments/1aojcc8/thoughts_grad_level_cs_classes/"
+  },
+  "reddit_fall_24_cs_grad_course.txt": {
+    "type": "reddit",
+    "title": "Fall 24 CS Grad Course",
+    "url": "https://www.reddit.com/r/umass/comments/1bymlyw/fall_24_cs_grad_course/"
+  },
+  "reddit_easy_cs_electives.txt": {
+    "type": "reddit",
+    "title": "Easy CS electives",
+    "url": "https://www.reddit.com/r/umass/comments/sdcne1/easy_cs_electives/"
+  },
+  "reddit_easiest_cs_400_500_courses.txt": {
+    "type": "reddit",
+    "title": "Easiest cs 400+/500+ courses....",
+    "url": "https://www.reddit.com/r/umass/comments/qubmte/easiest_cs_400_500_courses/"
+  },
+  "reddit_cs_courseload_advice.txt": {
+    "type": "reddit",
+    "title": "CS courseload advice",
+    "url": "https://www.reddit.com/r/umass/comments/patv3a/cs_courseload_advice/"
+  },
+  "reddit_freshman_cs_second_semester.txt": {
+    "type": "reddit",
+    "title": "Freshman CS Major, Second Semester Classes?",
+    "url": "https://www.reddit.com/r/umass/comments/jdppi6/freshman_cs_second_semester/"
+  },
+  "rmp_james_perretta.txt": {
+    "type": "rmp",
+    "title": "James Perretta",
+    "url": "https://www.ratemyprofessors.com/professor/3114707"
+  },
+  "rmp_ella_tuson.txt": {
+    "type": "rmp",
+    "title": "Ella Tuson",
+    "url": "https://www.ratemyprofessors.com/professor/3127793"
+  },
+  "rmp_marc_liberatore.txt": {
+    "type": "rmp",
+    "title": "Marc Liberatore",
+    "url": "https://www.ratemyprofessors.com/professor/1948400"
+  },
+  "rmp_phuthipong_bovornkeeratiroj.txt": {
+    "type": "rmp",
+    "title": "Phuthipong Bovornkeeratiroj",
+    "url": "https://www.ratemyprofessors.com/professor/2992114"
+  },
+  "rmp_ghazaleh_parvini.txt": {
+    "type": "rmp",
+    "title": "Ghazaleh Parvini",
+    "url": "https://www.ratemyprofessors.com/professor/2624866"
+  },
+  "rmp_justin_domke.txt": {
+    "type": "rmp",
+    "title": "Justin Domke",
+    "url": "https://www.ratemyprofessors.com/professor/2290260"
+  },
+  "rmp_marius_minea.txt": {
+    "type": "rmp",
+    "title": "Marius Minea",
+    "url": "https://www.ratemyprofessors.com/professor/2416008"
+  },
+  "rmp_cole_reilly.txt": {
+    "type": "rmp",
+    "title": "Cole Reilly",
+    "url": "https://www.ratemyprofessors.com/professor/2912301"
+  },
+  "rmp_joe_chiu.txt": {
+    "type": "rmp",
+    "title": "Joe Chiu",
+    "url": "https://www.ratemyprofessors.com/professor/2420066"
+  },
+  "rmp_mordecai_golin.txt": {
+    "type": "rmp",
+    "title": "Mordecai Golin",
+    "url": "https://www.ratemyprofessors.com/professor/2940693"
+  },
+  "s26_course_description.txt": {
+    "type": "local",
+    "title": "Spring 2026 Course Descriptions",
+    "url": null
+  },
+  "s26_course_schedule.txt": {
+    "type": "local",
+    "title": "Spring 2026 Course Schedule",
+    "url": null
+  },
+  "s26_reg_info.txt": {
+    "type": "local",
+    "title": "Spring 2026 Registration Info",
+    "url": null
+  },
+  "f26_course_description.txt": {
+    "type": "local",
+    "title": "Fall 2026 Course Descriptions",
+    "url": null
+  },
+  "f26_course_schedule.txt": {
+    "type": "local",
+    "title": "Fall 2026 Course Schedule",
+    "url": null
+  },
+  "f26_reg_info.txt": {
+    "type": "local",
+    "title": "Fall 2026 Registration Info",
+    "url": null
+  },
+  "computer_science_bs_requirement_f23.txt": {
+    "type": "local",
+    "title": "BS Computer Science Degree Requirements (Fall 2023)",
+    "url": null
+  }
+}

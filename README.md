@@ -93,11 +93,11 @@
 
 | # | Question | Expected answer | System response (summarized) | Retrieval quality | Response accuracy |
 |---|----------|-----------------|------------------------------|-------------------|-------------------|
-| 1 | | | | | |
-| 2 | | | | | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
+| 1 | Which main 200-level courses are required for the CS major? | CICS 210, COMPSCI 220, COMPSCI 230, COMPSCI 240, COMPSCI 250 | The main 200-level courses required for the CS major are COMPSCI 220 [5], COMPSCI 230 [5], COMPSCI 240 [5], and COMPSCI 250 [5]. Additionally, CICS 210 [5] is also a required course. Note that COMPSCI 198C is a prerequisite for COMPSCI 230 [5]. Also, CICS 110 and CICS 160 are introductory courses [5]. | Relevant | Accurate |
+| 2 | What are some electives I can take for the MS CS? | CS 560, CS 576, CS 589, CS 651, CS 670, CS 690k, 651, CS 514, CS 611 | Some electives for the MS CS include COMPSCI 589 [1], STAT 525 [1], COMPSCI 603, COMPSCI 683, and COMPSCI 687 [2]. Additionally, COMPSCI 611 - Advanced Algorithms, COMPSCI 576, and COMPSCI 670 are also of interest to MS CS students [4]. COMPSCI 689 is another option [4]. | Relevant | Accurate *(Even though the courses didn't match, the courses in the answer are indeed for grad students)*|
+| 3 | What are the most common reviews about Professor Parvini?| She's funny, she cares about students and will help students to understand concepts. She is disorganized though | Her course as disorganized. She is kind, funny, and nice, but her teaching style may come off as disorganized and her lecture slides and homework sheets have multiple typos. Some find class to be boring and the homeworks to be challenging. Despite this, she explains concepts clearly and gives helpful responses to questions, and tries to keep people involved. No specific course code is mentioned in the reviews.| Relevant | Accurate |
+| 4 | Give me the schedule time for lectures for CS 220 in Fall 2026 | Tue Thu 04:00 PM - 05:15 PM Hasbrck134 Perretta, Tue Thu 02:30 PM - 03:45 PM CMPLABE110 Minea | I couldn't find that in the sources. | Off-target | Inaccurate |
+| 5 | What are the prerequisite classes for most 300-level courses?| CICS 210, CS 240, CS 220, CS 230, CS 250, CS 320| For most 300-level courses, the prerequisite classes include COMPSCI 220 [3][4], COMPSCI 230 [7], COMPSCI 240 [1], and COMPSCI 250 [2][8]. Additionally, some courses require CICS 210 [2][5][8] or COMPSCI 187 [2][5][8] as a prerequisite. INFO 248 is also a prerequisite for some courses, particularly for INFORM majors [1][4][5]. ENGLWRIT 112 with a grade of C or better is required for CS majors in CICS 305 [1]. | Relevant | Accurate |
 
 **Retrieval quality:** Relevant / Partially relevant / Off-target  
 **Response accuracy:** Accurate / Partially accurate / Inaccurate

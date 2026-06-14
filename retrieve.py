@@ -36,6 +36,13 @@ OVERFETCH_FACTOR = 4
 MATCH_BONUS = 0.10
 MISMATCH_PENALTY = 0.10
 
+# Semester re-ranking mirrors the audience model: a chunk whose semester matches
+# the query's semester intent is nudged up, a chunk from the other (definite)
+# semester is pushed down, and chunks with no semester (Reddit, RMP, degree
+# requirements) stay neutral.
+SEMESTER_MATCH_BONUS = 0.10
+SEMESTER_MISMATCH_PENALTY = 0.10
+
 # Query-intent cues. Grad keywords mirror chunk.py's audience classifier; the
 # undergrad set covers class-year and degree-track phrasing. \bgrad\b avoids
 # matching "grade"/"undergrad" (see chunk.py for the boundary reasoning).
@@ -48,13 +55,36 @@ UNDERGRAD_INTENT_RE = re.compile(
     re.I,
 )
 
+# Semester cues. Each form maps to the canonical "<Season> 2026" stored in chunk
+# metadata. We only have 2026 data, so a bare "spring"/"fall" is enough.
+# Matches: "Spring", "Spring 2026", "Spring 26", "S26", "S 26", "S2026".
+SPRING_INTENT_RE = re.compile(r"\bspring(?:\s*20?26)?\b|\bs\s?20?26\b", re.I)
+FALL_INTENT_RE = re.compile(r"\bfall(?:\s*20?26)?\b|\bf\s?20?26\b", re.I)
 
-def detect_query_intent(query: str) -> str | None:
+
+def detect_query_audience(query: str) -> str | None:
     """Classify a query as targeting "grad" or "undergrad" content, else None."""
     if GRAD_INTENT_RE.search(query):
         return "grad"
     if UNDERGRAD_INTENT_RE.search(query):
         return "undergrad"
+    return None
+
+
+def detect_query_semester(query: str) -> str | None:
+    """Classify a query as targeting a specific semester, else None.
+
+    Returns the canonical "Spring 2026"/"Fall 2026" string so it can be matched
+    directly against the chunk `semester` metadata (which may be a comma-joined
+    list like "Fall 2026, Spring 2026" for cross-semester-merged chunks). When a
+    query names both seasons it is ambiguous, so we stay neutral (None).
+    """
+    spring = bool(SPRING_INTENT_RE.search(query))
+    fall = bool(FALL_INTENT_RE.search(query))
+    if spring and not fall:
+        return "Spring 2026"
+    if fall and not spring:
+        return "Fall 2026"
     return None
 
 
@@ -200,7 +230,9 @@ def retrieve(query: str, top_k: int = DEFAULT_TOP_K) -> list[dict[str, Any]]:
     metadatas = results.get("metadatas", [[]])[0]
     distances = results.get("distances", [[]])[0]
 
-    intent = detect_query_intent(query)
+    audience_intent = detect_query_audience(query)
+    semester_intent = detect_query_semester(query)
+    print(f'[AUDIENCE = {audience_intent}   SEMESTER = {semester_intent}]')
 
     candidates: list[dict[str, Any]] = []
     for chunk_id, document, metadata, distance in zip(
@@ -209,12 +241,19 @@ def retrieve(query: str, top_k: int = DEFAULT_TOP_K) -> list[dict[str, Any]]:
         # Lower is better (cosine distance). A match pulls the score down, a
         # definite mismatch pushes it up; "mixed"/None/missing stay neutral.
         adjusted = distance
-        if intent is not None:
+        if audience_intent is not None:
             audience = metadata.get("audience")
-            if audience == intent:
+            if audience == audience_intent:
                 adjusted -= MATCH_BONUS
             elif audience in ("grad", "undergrad"):  # the opposite, definite level
                 adjusted += MISMATCH_PENALTY
+        if semester_intent is not None:
+            chunk_semester = metadata.get("semester")
+            if chunk_semester:  # only schedule/description/reg_info chunks carry it
+                if semester_intent in chunk_semester:
+                    adjusted -= SEMESTER_MATCH_BONUS
+                else:  # belongs to a different, definite semester
+                    adjusted += SEMESTER_MISMATCH_PENALTY
         candidates.append(
             {
                 "id": chunk_id,
@@ -231,6 +270,7 @@ def retrieve(query: str, top_k: int = DEFAULT_TOP_K) -> list[dict[str, Any]]:
     for rank, candidate in enumerate(candidates[:top_k], start=1):
         candidate["rank"] = rank
         retrieved.append(candidate)
+    print_results(retrieved)
     return retrieved
 
 
@@ -246,6 +286,8 @@ def print_results(results: list[dict[str, Any]]) -> None:
             f"adjusted={adjusted:.4f} audience={metadata.get('audience')}"
         )
         print(f"source={source} type={source_type}")
+        if "semester" in metadata:
+            print(f"semester={metadata['semester']}")
         if "course_code" in metadata:
             print(f"course_code={metadata['course_code']}")
         if "thread_title" in metadata:

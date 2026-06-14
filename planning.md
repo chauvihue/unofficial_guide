@@ -111,7 +111,7 @@ For each query, ground the responses to the 5 most relevant chunks. Each chunk h
 
 | # | Question | Expected answer |
 |---|----------|-----------------|
-| 1 | Which main 200-level COMPSCI courses are required for the CS major? | CICS 210, COMPSCI 220, COMPSCI 230, COMPSCI 240, COMPSCI 250 |
+| 1 | Which main 200-level courses are required for the CS major? | CICS 210, COMPSCI 220, COMPSCI 230, COMPSCI 240, COMPSCI 250 |
 | 2 | What are some electives I can take for the MS CS? | CS 560, CS 576, CS 589, CS 651, CS 670, CS 690k, 651, CS 514, CS 611 |
 | 3 | What are the most common reviews about Professor Parvini?| She's funny, she cares about students and will help students to understand concepts. She is disorganized though |
 | 4 | I want to take CS 220, CS 230 and CS250 at the same time, give me their schedule times for lectures and labs in Fall 2026 | |
