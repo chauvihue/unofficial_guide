@@ -232,7 +232,8 @@ def retrieve(query: str, top_k: int = DEFAULT_TOP_K) -> list[dict[str, Any]]:
 
     audience_intent = detect_query_audience(query)
     semester_intent = detect_query_semester(query)
-    print(f'[AUDIENCE = {audience_intent}   SEMESTER = {semester_intent}]')
+    # print(f"[QUERY = {query}]")
+    # print(f'[AUDIENCE = {audience_intent}   SEMESTER = {semester_intent}]')
 
     candidates: list[dict[str, Any]] = []
     for chunk_id, document, metadata, distance in zip(
@@ -270,7 +271,8 @@ def retrieve(query: str, top_k: int = DEFAULT_TOP_K) -> list[dict[str, Any]]:
     for rank, candidate in enumerate(candidates[:top_k], start=1):
         candidate["rank"] = rank
         retrieved.append(candidate)
-    print_results(retrieved)
+    # print_results(retrieved)
+    # print()
     return retrieved
 
 
